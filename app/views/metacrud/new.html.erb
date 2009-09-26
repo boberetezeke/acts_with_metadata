@@ -1,0 +1,9 @@
+<div class="title"><%= @model_params[:title] %></div>
+<% form_tag({:action => :create}, {:method => :post}) do %>
+	<%= render(:partial => 'metacrud/new_actions') %>
+	<%= render(:partial => 'metacrud/model_form', :object => @new, :locals => {:model_params => @model_params, :subdesc => true}) %>
+	<div class="center">
+	</div>
+<% end %>
+ 
+

@@ -1,0 +1,76 @@
+
+(<%= @count %> <%= model_list.empty? ? "Objects" : model_list.first.display_name_for_class.pluralize %> )
+<%= pagination_links(model_params[:list_pages], :name => model_params[:list_page_param_name], :params => model_params[:other_params]) if model_params[:list_pages] %>
+<% if model_params[:table_css_class] then %>
+<table class="<%= model_params[:table_css_class] %>">
+<% else %>
+<table class="model-list-table">
+<% end %>
+
+<% if model_params[:heading_css_class] then %>
+<tr class="<%= model_params[:heading_css_class] %>" %>
+<% else %>
+<tr  class="model-list-heading-row">
+<% end %>
+	<% unless model_params[:link_field] %>
+		<th valign="top">link</th>
+	<% end %>
+	<% if model_params[:list_actions] then %>
+		<%= model_params[:list_actions].map{|a| "<th></th>"}.join %>
+	<% end %>
+	<% if model_params[:list_tags] then %>
+		<th valign="top" class="model-list-normal-data">Tags</th>
+	<% end %>
+	<% model_params[:members].each do |member|  %>
+		<% next if /^object_database_tag/ =~ member.field_name %>
+		<th valign="top"><%= member.display_name %></th>
+  	<% end %>
+</tr>
+<% for item in model_list %>
+	<% if item.respond_to?(:css_class) %>
+	<tr class="<%= item.css_class %>" %>
+	<% elsif model_params[:item_css_class] then %>
+	<tr class="<%= model_params[:item_css_class] %>" %>
+	<% else %>
+	<tr class="model-list-normal-row">
+	<% end %>
+		<% unless model_params[:link_field] %>
+			<td valign="top" class="model-list-normal-data">
+				<% if model_params[:controller] then %>
+					<%= link_to("show", {:controller => model_params[:controller], :action => "show", :id => item.database_id}) %>
+				<% else %>
+					<%= link_to("show", {:controller => item.class_name.to_s.tableize.singularize, :action => "show", :id => item.database_id}) %>
+				<% end %>
+			</td>
+		<% end %>
+		<% if model_params[:list_actions] then %>
+			<% model_params[:list_actions].each do |action| %>
+				<td valign="top" class="model-list-normal-data">
+					<% if model_params[:controller] then %>
+						<%= link_to(action, {:controller => model_params[:controller], :action => action, :id => item.database_id}) %>
+					<% else %>
+						<%= link_to(action, {:controller => item.class_name.to_s.tableize.singularize, :action => action, :id => item.database_id}) %>
+					<% end %>
+				</td>
+			<% end %>
+		<% end %>
+		<% if model_params[:list_tags] then %>
+			<td valign="top" class="model-list-normal-data">
+				<%= item.tag_list %>
+			</td>
+		<% end %>
+		<% model_params[:members].each do |member|  %>
+			<% next if /^object_database_tag/ =~ member.field_name %>
+			<td valign="top" class="model-list-normal-data">
+				<% value = display_value(item, member, member.options[:list_limit]) %>
+				<% if model_params[:link_field] && (member.field_name == model_params[:link_field]) then %>
+					<%= link_to(value.empty? ? "link" : value, {:action => "show", :id => item}) %>
+				<% else %>
+					<%= value %>
+				<% end %>
+			</td>
+		<% end %>
+	</tr>
+<% end %>
+</table>
+

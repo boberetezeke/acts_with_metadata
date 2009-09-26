@@ -1,0 +1,20 @@
+<% edit = modelform %>
+<table>
+<% edit.class.members.each do |member| %>
+	<tr>
+	<th valign="top" align="right">
+	<label for="<%= member.label_for %>"><%= member.display_name %></label>
+	<%= member.sub_description if member.sub_description -%>
+	</th>
+	<td>
+	<% if member.read_only %>
+		<%= display_value(edit, member) %>
+	<% else %>
+		<%= edit_value(edit, member) %>
+	<% end %>
+	</td>
+	</tr>
+<% end %>
+</table>
+
+

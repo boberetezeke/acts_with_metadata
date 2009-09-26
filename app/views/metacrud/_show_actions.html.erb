@@ -1,0 +1,15 @@
+<% if !params["layout"] || params["layout"] != "none" %>
+<div class="actions">Actions:
+<span class="action"><%= link_to("list", {:action => "list" }) %></span>
+<span class="action"><%= link_to("edit", {:action => "edit", :id => show_actions}) %></span>
+<span class="action"><%= link_to("delete", {:action => "destroy", :id => show_actions}, :id => "delete") %></span>
+<span class="action"><%= link_to("new", {:action => "new"}) %></span>
+<script>
+	Event.observe("delete", "click", function(event) {
+		if (!confirm("are you sure?")) {
+			Event.stop(event)
+		}
+	})
+</script>
+</div>
+<% end %>

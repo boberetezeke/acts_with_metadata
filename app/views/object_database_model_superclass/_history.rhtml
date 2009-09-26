@@ -1,0 +1,10 @@
+<% h = history.history %>
+<hr>
+<div class="history">
+<h3>History:</h3>
+<% h.member_changes.reverse.each do |mc| %>
+	<%= render :partial => "changes/member_change", :object => mc, :locals => {:parent => history, :parent_class => history.class, :display_object => false, :change_time => mc.change_time} %><br>
+<% end %>
+Created: <%= time_ago_in_words(h.creation_time, true) %> ago
+</div>
+

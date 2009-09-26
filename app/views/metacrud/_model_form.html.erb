@@ -1,0 +1,47 @@
+<% edit = model_form %>
+<table>
+<tr>
+	<td valign="top" align="right" class="model-form-heading-data">
+		Tags
+	</td>
+	<td class="model-form-normal-data">
+		<%= text_field("edit", "tag_list", {:size => 100}) %>
+	</td>
+</tr>
+<% model_params[:members].each do |member| %>
+	<% next if /^object_database_tag/ =~ member.field_name %>
+	<% if member.field_type == :text %>
+		<tr>
+			<td valign="top" align="center" class="model-form-heading-data" colspan="2">
+				<label for="<%= member.label_for %>"><%= member.display_name %></label>
+				<%= member.sub_description if member.sub_description -%>
+			</td>
+		<tr>
+		<tr>
+			<td class="model-form-normal-data" colspan="2">
+				<% if member.read_only %>
+					<%= display_value(edit, member) %>
+				<% else %>
+					<%= edit_value(edit, member) %>
+				<% end %>
+			</td>
+		</tr>
+	<% else %>
+		<tr>
+			<td valign="top" align="right" class="model-form-heading-data">
+				<label for="<%= member.label_for %>"><%= member.display_name %></label>
+				<%= member.sub_description if member.sub_description -%>
+			</td>
+			<td class="model-form-normal-data">
+				<% if member.read_only %>
+					<%= display_value(edit, member) %>
+				<% else %>
+					<%= edit_value(edit, member) %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+<% end %>
+</table>
+
+

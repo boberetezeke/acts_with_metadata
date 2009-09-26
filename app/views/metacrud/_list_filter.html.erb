@@ -1,0 +1,14 @@
+<div class="actions">Actions:
+	<%= start_form_tag(:action => "add_filter", :redirect_controller => controller, :redirect_action => action, :redirect_id => id) %>
+	<%= link_to("clear_filter", :action => 'clear_filter', :params => {:redirect_controller => controller, :redirect_action => action, :redirect_id => id}) %>
+	<%= text_field_tag("filter_text", "", :size => 80) %>
+	<%= submit_tag("Add Filter") %>
+	<%= end_form_tag %>
+	<% if @filter_string then %>
+		<p><%=h @filter_string %></p>
+	<% end %>
+	<% if @error then %>
+		<p>ERROR: <%=h @error_string %></p>
+	<% end %>
+</div>
+

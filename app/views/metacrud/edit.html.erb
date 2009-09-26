@@ -1,0 +1,15 @@
+<% form_tag(:action => "update", :id => @edit) do %>
+	<div class="title-and-actions">
+		<table width="100%">
+			<tr>
+				<td align="left"><div class="title"><%= @model_params[:title] %></div></td>
+				<td align="right"><%= render(:partial => "metacrud/edit_actions", :object => @edit) %></td>
+			</tr>
+		</table>
+	</div>
+	<%= render(:partial => 'metacrud/model_form', :object => @edit, :locals => {:model_params => @model_params, :subdesc => false}) %>
+<% end %>
+ 
+
+
+

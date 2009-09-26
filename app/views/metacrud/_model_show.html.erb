@@ -1,0 +1,25 @@
+<table class="model-show-table" border="0">
+<% logger.debug("_model_show, model params = #{model_params.inspect}") %>
+<% model_params[:members].each do |member|  %>
+	<% next if /^object_database_tag/ =~ member.field_name %>
+	<% html_converter = model_params[:html_converter] %>
+	<% html_converter = member.options[:html_converter] if member.options[:html_converter] %>
+	
+	<% val = model_show.send(member.field_name) %>
+	<% next unless !val.nil? && val != "" %>
+	<% if member.field_type == :text %>
+		<tr class="model-show-row">
+			<td align="center" valign="top" class="model-show-heading-data" colspan="2"><%= member.display_name.capitalize %></td>
+		</tr>
+		<tr>
+			<td class="model-show-normal-data" colspan="2"><%= display_value(model_show, member, nil, html_converter) %></td>
+		</tr>
+	<% else %>
+		<tr class="model-show-row">
+			<td align="right" valign="top" width="20%" class="model-show-heading-data"><%= member.display_name.capitalize %></td>
+			<td class="model-show-normal-data"><%= display_value(model_show, member, nil, :html_converter) %></td>
+		</tr>
+	<% end %>
+<% end %>
+</table>
+

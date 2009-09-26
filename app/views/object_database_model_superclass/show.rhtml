@@ -1,0 +1,15 @@
+<div class="title-and-actions">
+	<table width="100%">
+		<tr>
+			<td align="left"><div class="title"><%= @model_params[:title] %></div></td>
+			<td align="right"><%= render(:partial => "metacrud/show_actions", :object => @object) %></td>
+		</tr>
+	</table>
+</div>
+<div class="title-and-tags">
+	<div class="tags-title">Tags:</div><div class="tags"><%= @object.tag_list %></div>
+</div>
+<%= render(:partial => "metacrud/model_show", :object => @object, :locals => {:model_params => @model_params}) %>
+<% unless @object.kind_of?(DRb::DRbObject) %>
+	<%# render(:partial => "object_database_model_superclass/history", :object => @object) %>
+<% end %>

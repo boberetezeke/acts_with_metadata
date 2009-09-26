@@ -1,0 +1,4 @@
+<div class="title"><%= @model_params[:title] %></div>
+<%= render(:partial => "metacrud/show_actions", :object => @object) %>
+<%= render(:partial => "metacrud/model_show", :object => @object, :locals => {:model_params => @model_params}) %>
+<%= render(:partial => "object_database_model_superclass/history", :object => @object) %>

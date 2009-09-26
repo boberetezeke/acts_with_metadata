@@ -1,0 +1,9 @@
+<div class="title-and-actions">
+	<table width="100%">
+		<tr>
+			<td align="left"><div class="title"><%= @model_params[:title] %></div></td>
+			<td align="right"><%= render(:partial => "metacrud/list_actions") %></td>
+		</tr>
+	</table>
+</div>
+<%= render(:partial => "metacrud/model_list", :object => @list, :locals => {:model_params => @model_params}) %>
